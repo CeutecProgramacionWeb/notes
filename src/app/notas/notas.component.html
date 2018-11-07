@@ -1,0 +1,68 @@
+<div *ngIf="selectedNota; else crear" class="card">
+  <form (ngSubmit) = "onSubmit();">
+      <div class="card-body">
+          <h2 class="card-title">
+            Editar Nota
+          </h2>
+          <div class="form-group">
+            Nombre:
+            <input type="text" name="nombre" class="form-control" [(ngModel)] = "selectedNota.titulo">
+          </div>
+          <div class="form-group">
+            Descripcion:
+            <input type="text" name="descripcion" class="form-control" [(ngModel)] = "selectedNota.descripcion">
+          </div>
+          <div class="form-group">
+              Categoria:
+              <select name="categorias" class="form-control">
+                <option *ngFor = "let categoria of categorias" [value] = "categoria">{{categoria}}</option>
+              </select>
+            </div>
+          <div class="card-text">
+            <button type="submit" class="btn btn-success">Salvar</button>
+          </div>
+        </div>
+  </form>
+</div>
+
+<ng-template #crear>
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">
+        Crear Nota
+      </h2>
+      <div class="card-text">
+        <button class="btn btn-primary" (click)="crearNota();">Crear</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<br>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">
+      Notas
+    </h2>
+    <div class="card-text">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <td>Titulo</td>
+              <td>Contenido</td>
+              <td>Categoria</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let nota of notas" (click)="onSelect(nota);" [class.selected]="nota === selectedNota">
+              <td>{{nota.titulo}}</td>
+              <td>{{nota.descripcion}}</td>
+              <td>{{nota.categoria}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
