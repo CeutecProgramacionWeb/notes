@@ -6,13 +6,14 @@
           </h2>
           <div class="form-group">
             Nombre:
-            <input type="text" name="nombre" class="form-control" [(ngModel)] = "selectedNota.titulo">
+            <input type="text" #nombre name="nombre" class="form-control" [(ngModel)] = "selectedNota.titulo" required>
+            {{nombre.className}}
           </div>
           <div class="form-group">
             Descripcion:
             <input type="text" name="descripcion" class="form-control" [(ngModel)] = "selectedNota.descripcion">
           </div>
-          <div class="form-group">
+          <div class="form-group" required>
               Categoria:
               <select name="categorias" class="form-control">
                 <option *ngFor = "let categoria of categorias" [value] = "categoria">{{categoria}}</option>
