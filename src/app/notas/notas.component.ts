@@ -13,11 +13,9 @@ export class NotasComponent implements OnInit {
   notas : Array<Nota>;
   selectedNota : Nota;
   categorias : Array<Categorias>;
-  crear: boolean;
 
   constructor(public notasService : NotasService) {
     this.notasService = notasService;
-    this.crear = true;
    }
 
   ngOnInit() { 
@@ -38,7 +36,7 @@ export class NotasComponent implements OnInit {
   }
 
   crearNota():void{
-    this.crear = false;
+     this.selectedNota = new Nota();
   }
 
   onSelect(nota: Nota){
