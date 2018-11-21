@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Nota } from '../shared/models/nota';
-import { NotasMock } from '../shared/notas-mock';
+import { NotasService } from '../shared/services/notas.service';
+import { Categorias } from '../shared/models/categorias';
 
 @Component({
   selector: 'app-notas',
@@ -11,17 +12,33 @@ export class NotasComponent implements OnInit {
 
   notas : Array<Nota>;
   selectedNota : Nota;
-  categorias : string [];
+  categorias : Array<Categorias>;
+  crear: boolean;
 
-  constructor() { }
+  constructor(public notasService : NotasService) {
+    this.notasService = notasService;
+    this.crear = true;
+   }
 
-  ngOnInit() {
-    this.notas = NotasMock
-    this.categorias = ["Categoria 1", "Categoria 2", "Categoria 3"];
+  ngOnInit() { 
+    this.notasService.getNotas()
+    .subscribe((data : Array<Nota>) => {
+      this.notas = data;
+    },
+    (error : any ) => {
+      console.log("Error " + error);
+    });
+    this.notasService.getCategorias()
+    .subscribe((data: Array<Categorias>) => {
+        this.categorias = data;
+    },
+    (error : any ) => {
+      console.log("Error " + error);
+    });
   }
 
   crearNota():void{
-    
+    this.crear = false;
   }
 
   onSelect(nota: Nota){
@@ -29,6 +46,14 @@ export class NotasComponent implements OnInit {
   }
 
   onSubmit() : void{
-    this.selectedNota = null;
+    this.notasService.modificarNota(this.selectedNota)
+    this.selectedNota = null;  
+    this.notasService.getNotas()
+    .subscribe((data : Array<Nota>) => {
+      this.notas = data;
+    },
+    (error : any ) => {
+      console.log("Error " + error);
+    });
   }
 }
